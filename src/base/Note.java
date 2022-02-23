@@ -29,9 +29,7 @@ public class Note {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Note))
 			return false;
 		Note other = (Note) obj;
 		return Objects.equals(title, other.title);
