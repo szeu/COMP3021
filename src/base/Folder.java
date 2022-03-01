@@ -75,15 +75,31 @@ public class Folder implements Comparable<Folder> {
 				continue;
 			}
 			for(Note note : notes) {
+//				System.out.println(token + '\t' + note.getTitle());
 				if(note instanceof ImageNote) {
-					if(note.getTitle().regionMatches(true, 0, token, 0, token.length())) {
-						list.add(note);
+					if(note.getTitle().toLowerCase().contains(token.toLowerCase())) {
+						if(!list.contains(note)) {
+							list.add(note);
+//							System.out.println("enter");
+						}
 					}
+//					if(note.getTitle().regionMatches(true, 0, token, 0, token.length())) {
+//						list.add(note);
+//					}
 				}
 				if(note instanceof TextNote) {
-					if(note.getTitle().regionMatches(true, 0, token, 0, token.length())) {
-						list.add(note);
+					String content = ((TextNote)note).getContent();
+					if(note.getTitle().toLowerCase().contains(token.toLowerCase()) || 
+							content.toLowerCase().contains(token.toLowerCase())) {
+						if(!list.contains(note)) {
+							list.add(note);
+//							System.out.println("enter");
+						}
 					}
+//					if(note.getTitle().regionMatches(true, 0, token, 0, token.length()) || 
+//							content.regionMatches(true, 0, token, 0, token.length())) {
+//						list.add(note);
+//					}
 				}
 			}
 		}

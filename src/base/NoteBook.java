@@ -70,6 +70,7 @@ public class NoteBook {
 		List<Note> list = new ArrayList<Note>();
 		for(Folder f: folders) {
 			list.addAll(f.searchNotes(keywords));
+//			System.out.println();
 		}
 		return list;
 	}

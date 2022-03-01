@@ -11,4 +11,9 @@ public class TextNote extends Note{
 		super(title);
 		this.content = content;
 	}
+	
+	//not included in lab3 task
+	public String getContent() {
+		return content;
+	}
 }
