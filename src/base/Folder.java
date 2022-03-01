@@ -80,12 +80,8 @@ public class Folder implements Comparable<Folder> {
 					if(note.getTitle().toLowerCase().contains(token.toLowerCase())) {
 						if(!list.contains(note)) {
 							list.add(note);
-//							System.out.println("enter");
 						}
 					}
-//					if(note.getTitle().regionMatches(true, 0, token, 0, token.length())) {
-//						list.add(note);
-//					}
 				}
 				if(note instanceof TextNote) {
 					String content = ((TextNote)note).getContent();
@@ -93,12 +89,13 @@ public class Folder implements Comparable<Folder> {
 							content.toLowerCase().contains(token.toLowerCase())) {
 						if(!list.contains(note)) {
 							list.add(note);
-//							System.out.println("enter");
 						}
 					}
 //					if(note.getTitle().regionMatches(true, 0, token, 0, token.length()) || 
 //							content.regionMatches(true, 0, token, 0, token.length())) {
-//						list.add(note);
+//						if(!list.contains(note)) {
+//							list.add(note);
+//						}
 //					}
 				}
 			}
