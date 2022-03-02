@@ -70,33 +70,41 @@ public class Folder implements Comparable<Folder> {
 	public List<Note> searchNotes(String keywords){
 		String[] tokens = keywords.split(" ");
 		List<Note> list = new ArrayList<Note>();
-		for(String token : tokens) {
-			if(token.equalsIgnoreCase("or")) {
-				continue;
-			}
-			for(Note note : notes) {
-//				System.out.println(token + '\t' + note.getTitle());
+		for(Note note : notes) {
+			boolean haveExist = false;
+			int counter = 0;
+			int add = 0;
+			for(String token : tokens) {
+				if(token.equalsIgnoreCase("or")) {
+					continue;
+				}
+				counter++;
 				if(note instanceof ImageNote) {
 					if(note.getTitle().toLowerCase().contains(token.toLowerCase())) {
-						if(!list.contains(note)) {
+						if(!list.contains(note) && haveExist && (add <= 2 && counter >= 3)) {
 							list.add(note);
+							haveExist = false;
+							
+						}
+						else {
+							add = counter;
+							haveExist = true;
 						}
 					}
 				}
-				if(note instanceof TextNote) {
+				else if(note instanceof TextNote) {
 					String content = ((TextNote)note).getContent();
 					if(note.getTitle().toLowerCase().contains(token.toLowerCase()) || 
 							content.toLowerCase().contains(token.toLowerCase())) {
-						if(!list.contains(note)) {
+						if(!list.contains(note) && haveExist && (add <= 2 && counter >= 3)) {
 							list.add(note);
+							haveExist = false;
+						}
+						else {
+							add = counter;
+							haveExist = true;
 						}
 					}
-//					if(note.getTitle().regionMatches(true, 0, token, 0, token.length()) || 
-//							content.regionMatches(true, 0, token, 0, token.length())) {
-//						if(!list.contains(note)) {
-//							list.add(note);
-//						}
-//					}
 				}
 			}
 		}
