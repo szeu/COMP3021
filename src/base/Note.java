@@ -3,7 +3,7 @@ package base;
 import java.util.Objects;
 import java.util.Date;
 
-public class Note implements Comparable<Note> {
+public class Note implements Comparable<Note> , java.io.Serializable{
 	private Date date;
 	private String title;
 	
