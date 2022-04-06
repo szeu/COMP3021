@@ -110,4 +110,25 @@ public class Folder implements Comparable<Folder> , java.io.Serializable{
 		}
 		return list;
 	}
+	
+	// Lab 7
+	public List<Note> searchnotes(String keywords){
+		String[] tokens = keywords.split(" ");
+		List<Note> list = new ArrayList<Note>();
+		for(Note note : notes) {
+			for(String token : tokens) {
+				if(token.equalsIgnoreCase("or")) {
+					continue;
+				}
+				if(note instanceof TextNote) {
+					String content = ((TextNote)note).getContent();
+					if(note.getTitle().toLowerCase().contains(token.toLowerCase()) || 
+							content.toLowerCase().contains(token.toLowerCase())) {
+							list.add(note);
+					}
+				}
+			}
+		}
+		return list;
+	}
 }

@@ -67,6 +67,8 @@ public class NoteBookWindow extends Application {
 	 * current search string
 	 */
 	String currentSearch = "";
+	
+	private Folder folder = null;
 
 	public static void main(String[] args) {
 		launch(NoteBookWindow.class, args);
@@ -106,7 +108,32 @@ public class NoteBookWindow extends Application {
 		buttonSave.setPrefSize(100, 20);
 		buttonSave.setDisable(true);
 
-		hbox.getChildren().addAll(buttonLoad, buttonSave);
+		Label searchLable = new Label("Search :");
+		searchLable.setPadding(new Insets(5));
+		TextField searchText = new TextField();
+		Button searchButton = new Button("Search");
+		searchButton.setPrefSize(100, 20);
+		Button clearButton = new Button("Clear Search");
+		clearButton.setPrefSize(100, 20);
+		
+		searchButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				currentSearch = searchText.getText();
+				updateListView();
+			}
+		});
+		
+		clearButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				currentSearch = "";
+				searchText.setText("");
+				updateListView();
+			}
+		});
+		
+		hbox.getChildren().addAll(buttonLoad, buttonSave, searchLable, searchText, searchButton, clearButton);
 
 		return hbox;
 	}
@@ -123,7 +150,9 @@ public class NoteBookWindow extends Application {
 		vbox.setSpacing(8); // Gap between nodes
 
 		// TODO: This line is a fake folder list. We should display the folders in noteBook variable! Replace this with your implementation
-		foldersComboBox.getItems().addAll("FOLDER NAME 1", "FOLDER NAME 2", "FOLDER NAME 3");
+		for(Folder f : noteBook.getFolders()) {
+			foldersComboBox.getItems().add(f.getName());
+		}
 
 		foldersComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>() {
 			@Override
@@ -151,6 +180,12 @@ public class NoteBookWindow extends Application {
 				// TODO load the content of the selected note in
 				// textAreNote
 				String content = "";
+				for(Note n : folder.getNotes()) {
+					if(n.getTitle() == title) {
+						TextNote tn = (TextNote) n;
+						content = tn.getContent();
+					}
+				}
 				textAreaNote.setText(content);
 
 			}
@@ -168,7 +203,24 @@ public class NoteBookWindow extends Application {
 
 		// TODO populate the list object with all the TextNote titles of the
 		// currentFolder
-
+		for(Folder f : noteBook.getFolders()) {
+			if(f.getName() == currentFolder) {
+				folder = f;
+				if(currentSearch.isEmpty()) {
+					for(Note n : f.getNotes()) {
+						if(n instanceof TextNote)
+							list.add(n.getTitle());
+					}
+				}
+				else {
+					for(Note n : f.searchnotes(currentSearch)) {
+						if(n instanceof TextNote)
+							list.add(n.getTitle());
+					}
+				}
+			}
+		}
+		
 		ObservableList<String> combox2 = FXCollections.observableArrayList(list);
 		titleslistView.setItems(combox2);
 		textAreaNote.setText("");
