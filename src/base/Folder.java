@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
+
 public class Folder implements Comparable<Folder> , java.io.Serializable{
 	private ArrayList<Note> notes;
 	private String name;
@@ -130,5 +134,15 @@ public class Folder implements Comparable<Folder> , java.io.Serializable{
 			}
 		}
 		return list;
+	}
+	
+	public boolean removeNote (String title) {
+		for(Note n : notes) {
+			if(n.getTitle() == title) {
+				notes.remove(n);
+				return true;
+			}
+		}
+		return false;
 	}
 }

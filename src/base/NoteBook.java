@@ -102,12 +102,17 @@ public class NoteBook implements java.io.Serializable{
 			out = new ObjectOutputStream(fos);
 			out.writeObject(this);
 			out.close();
+			fos.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
+	}
+	
+	public void addFolder(Folder folder) {
+		folders.add(folder);
 	}
 	
 }

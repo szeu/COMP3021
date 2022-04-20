@@ -75,4 +75,8 @@ public class TextNote extends Note implements java.io.Serializable{
 			e2.printStackTrace();
 		}
 	}
+	
+	public void updateContent(String newContent) {
+		this.content = newContent;
+	}
 }
