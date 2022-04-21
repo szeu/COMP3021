@@ -146,16 +146,24 @@ public class NoteBookWindow extends Application {
 		buttonSave.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				noteBook.save(file.getName());
+				FileChooser filechooser = new FileChooser();
+				filechooser.setTitle("Please Choose a File to Save Your NoteBook Object!");
 				
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Successfully saved");
-				alert.setContentText("Your file has been saved to file " + file.getName());
-				alert.showAndWait().ifPresent(rs -> {
-					if(rs == ButtonType.OK) {
-						System.out.println("Pressed OK.");
-					}
-				});
+				FileChooser.ExtensionFilter exitFilter = new FileChooser.ExtensionFilter("Serialized Object File (*.ser)", "*.ser");
+				filechooser.getExtensionFilters().add(exitFilter);
+				
+				file = filechooser.showOpenDialog(stage);
+				if(file != null) {
+					noteBook.save(file.getName());
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Successfully saved");
+					alert.setContentText("Your file has been saved to file " + file.getName());
+					alert.showAndWait().ifPresent(rs -> {
+						if(rs == ButtonType.OK) {
+							System.out.println("Pressed OK.");
+						}
+					});
+				}
 			}
 			
 		});
